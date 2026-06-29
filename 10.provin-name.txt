@@ -1,0 +1,32 @@
+Heilongjiang
+Jilin
+Liaoning
+Beijing Shi
+Tianjin Shi
+Hebei
+Shanxi
+Nei Mongol
+Ningxia Huizu
+Shaanxi
+Gansu
+Qinghai
+Xinjiang Uygur
+Shandong
+Jiangsu
+Shanghai Shi
+Zhejiang
+Anhui
+Jiangxi
+Fujian
+Henan
+Hubei
+Hunan
+Chongqing Shi
+Sichuan
+Yunnan
+Guizhou
+Xizang
+Guangxi
+Guandong
+Hainan
+Hong Kong
