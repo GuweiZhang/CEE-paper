@@ -1,0 +1,19 @@
+name: cee-reproduce
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - xarray
+  - netcdf4
+  - scipy
+  - matplotlib
+  - shapely
+  - pyshp
+  - pyproj
+  - ncl=6.6.2
+  - r-base=4.4
+  - r-dlnm=2.4.10
+  - r-metafor
+  - r-readxl

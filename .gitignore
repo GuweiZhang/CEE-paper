@@ -1,0 +1,8 @@
+outputs/
+external_inputs/
+data.xlsx
+authorized_input.csv
+__pycache__/
+*.pyc
+.Rhistory
+.RData
