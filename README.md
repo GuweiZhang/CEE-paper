@@ -1,6 +1,6 @@
 # CWRF precipitation and mortality: code and figure data
 
-Code and processed source data accompanying the revised manuscript. The repository contains plotting scripts for Figures 1-4 and Supplementary Figures 1-14, upstream processing scripts, and a public implementation of the two-stage epidemiological model supplied by Hanling.
+Code and processed source data accompanying the manuscript. The repository contains plotting scripts for Figures 1-4 and Supplementary Figures 1-14, upstream processing scripts, and an implementation of the two-stage epidemiological model used in the study.
 
 ## Contents
 
@@ -13,7 +13,7 @@ Code and processed source data accompanying the revised manuscript. The reposito
 | `assets/` | Map helpers, boundaries and river geometry |
 | `run_figures.py` | Figure execution entry point |
 
-Raw daily mortality records and private intermediate health datasets are not included. The response-only illustrative mortality figure is not included. Tests, validation outputs and internal review files are excluded from this release.
+Raw daily mortality records and restricted intermediate health datasets are not included. Tests, validation outputs and internal review files are also excluded from this repository.
 
 ## Installation
 
@@ -38,7 +38,7 @@ python run_figures.py --figures Figure1 FigureS14
 
 The runner stages source data and map assets in `outputs/figures/`. It writes figures and execution logs there without altering the supplied data. Use `--output` to select another output directory and `--ncl /path/to/ncl` if NCL is not on PATH. Set `NCARG_ROOT` to the NCL installation if required by your environment.
 
-The supplied data are the author-provided figure inputs. Figure S14 uses the rounded regional estimates in the revised Supplementary Table 3; plotting it does not refit the epidemiological model.
+The repository includes the processed inputs used to reproduce the figures. Figure S14 uses the rounded regional estimates in Supplementary Table 3; plotting it does not refit the epidemiological model.
 
 ## Epidemiological model
 
@@ -57,11 +57,11 @@ CSV and XLSX inputs are supported. Required columns:
 | `mean_temp` | Daily mean temperature |
 | `rain_mm` | Daily precipitation in mm |
 
-This script adapts Hanling's supplied model to a file-based interface. Stage 1 fits site-specific quasi-Poisson distributed lag models with lag days 0-14, temperature adjustment, calendar-time splines and day of week. Stage 2 pools cumulative associations by region and precipitation category using REML random-effects meta-analysis.
+This script provides a file-based implementation of the two-stage precipitation-mortality model used in the study. Stage 1 fits site-specific quasi-Poisson distributed lag models with lag days 0-14, temperature adjustment, calendar-time splines and day of week. Stage 2 pools cumulative associations by region and precipitation category using REML random-effects meta-analysis.
 
 The target rainfall category is coded as 1, no/light rainfall below 10 mm as 0, and other categories as missing. Missing calendar dates remain explicit missing rows; mortality values are never filled with zeros. Fits that fail or produce warnings are recorded. Regions with one usable site retain the site estimate without a heterogeneity estimate.
 
-The public wrapper adds input checks, calendar handling and regional pooling around the supplied model specification. It has not been refitted using the restricted study mortality records. Reproducing the published estimates and eligible-site counts requires the study inputs and eligibility rules. The `available_target_days` output is a diagnostic, not the published exposure-day count. Site-level outputs should remain in the authorized data environment.
+The script includes input checks, calendar handling, site-level model fitting and regional pooling. Because the restricted study mortality records are not publicly distributed, the epidemiological model cannot be refitted from this repository alone. Reproducing the reported estimates and eligible-site counts requires the study inputs and eligibility rules. The `available_target_days` output is a diagnostic, not the reported exposure-day count. Site-level outputs should remain in the authorized data environment.
 
 ## Recreate processed figure inputs
 
@@ -76,7 +76,7 @@ Processing requires external climate, population and authorized mortality inputs
 | S9 | `build_FigureS9_storm_only_basis_private.py`, then `make_FigureS9_storm_only_source_data.py` |
 | S12 | `FigureS12-B-PDF*.ncl`, `FigureS12-B-PDF*.py`, then `FigureS12_prepare.ncl` |
 | S13 | `FigureS13_prepare.ncl` |
-| S14 | Published estimates supplied in `FigureS14_RR.csv` |
+| S14 | Reported estimates supplied in `FigureS14_RR.csv` |
 
 The S12 NCL PDF scripts prepare CWRF/NEX-GDDP-CMIP6 ensemble-mean daily fields, using external files under `raw/`, `NASA/` and `OBS/`, plus the regional mask. The Python PDF scripts additionally require the named raw-CMIP6 ensemble-mean inputs. The Python scripts calculate daily spatial PDFs, their temporal means and 1.96 times the standard error across daily PDFs. These are the original daily-PDF uncertainty summaries, not a minimum-to-maximum range across models. `FigureS12_prepare.ncl` combines the PDF CSVs with the map inputs into two NetCDF files. Existing outputs should be moved aside before running exporters that refuse to overwrite them.
 
